@@ -37,7 +37,6 @@ const Request = () => {
       }, 3000);
     } catch (error) {}
   }
-  console.log(receiveRequestList, "receiveRequestList");
   return (
     <>
       <div className="flex flex-col gap-2 justify-center items-center rounded-lg max-auto">

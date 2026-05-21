@@ -6,7 +6,7 @@ import Card from "./card";
 
 const Feed = () => {
   const dispatch = useDispatch();
-  const feed = useSelector((store) => store.feed);
+  const feed = useSelector((store) => store?.feed);
 
   const fetchViewApi = async () => {
     try {
@@ -18,16 +18,40 @@ const Feed = () => {
       console.log(err);
     }
   };
+
   useEffect(() => {
     fetchViewApi();
   }, []);
+
+  async function handleInterestedOrIgnore(status) {
+    console.log(status, feed[0]);
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/request/send/${status}/${feed[0]?._id}`,
+        {},
+        { withCredentials: true },
+      );
+      console.log(response, "response");
+      if (response.data.statusCode === 200) {
+        fetchViewApi();
+      }
+    } catch (error) {}
+  }
+
   return (
     <div className="flex justify-center p-8">
-      {feed &&
-        feed.length > 0 &&
-        feed.map((item, index) => {
-          return <Card key={`${index}_card`} data={item} />;
-        })}
+      {feed && feed.length > 0 && (
+        <Card
+          data={{
+            firstName: feed[0].firstName,
+            lastName: feed[0].lastName,
+            age: feed[0].age,
+            photo: feed[0].photo,
+            about: feed[0].about,
+          }}
+          onClickButton={handleInterestedOrIgnore}
+        />
+      )}
     </div>
   );
 };

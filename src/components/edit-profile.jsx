@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/userslice";
 import Card from "./card";
 
@@ -123,7 +123,10 @@ const EditProfile = ({ user }) => {
             </div>
           </div>
         </div>
-        <Card data={user} />
+        <Card
+          data={{ firstName, lastName, gender, photo, about, gender }}
+          hideButton={true}
+        />
       </div>
       {showToast && (
         <div className="toast toast-top toast-center">
