@@ -3,6 +3,7 @@ import { addfeed } from "../redux/feedSlice";
 import { useEffect } from "react";
 import axios from "axios";
 import Card from "./card";
+import { BASE_URL } from "../api/basepath";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const Feed = () => {
 
   const fetchViewApi = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/user/feed", {
+      const response = await axios.get(`${BASE_URL}/user/feed`, {
         withCredentials: true,
       });
       dispatch(addfeed(response?.data?.data));
@@ -27,11 +28,10 @@ const Feed = () => {
     console.log(status, feed[0]);
     try {
       const response = await axios.post(
-        `http://localhost:3000/request/send/${status}/${feed[0]?._id}`,
+        `${BASE_URL}/request/send/${status}/${feed[0]?._id}`,
         {},
         { withCredentials: true },
       );
-      console.log(response, "response");
       if (response.data.statusCode === 200) {
         fetchViewApi();
       }

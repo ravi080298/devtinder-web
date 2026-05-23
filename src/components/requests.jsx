@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { receiveRequest } from "../redux/requestSlice";
+import { BASE_URL } from "../api/basepath";
 
 const Request = () => {
   const [showToast, setShowToast] = useState(false);
@@ -10,10 +11,9 @@ const Request = () => {
   const dispatch = useDispatch();
   const fetchRequests = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3000/user/request/receive",
-        { withCredentials: true },
-      );
+      const response = await axios.get(`${BASE_URL}/user/request/receive`, {
+        withCredentials: true,
+      });
       dispatch(receiveRequest(response?.data?.data));
     } catch (error) {}
   };
@@ -25,7 +25,7 @@ const Request = () => {
   async function acceptOrRejectRequest(status, id) {
     try {
       const response = await axios.post(
-        `http://localhost:3000/request/review/${status}/${id}`,
+        `${BASE_URL}/request/review/${status}/${id}`,
         {},
         { withCredentials: true },
       );

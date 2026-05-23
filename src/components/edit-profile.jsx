@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/userslice";
 import Card from "./card";
+import { BASE_URL } from "../api/basepath";
 
 const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
@@ -18,7 +19,7 @@ const EditProfile = ({ user }) => {
   async function submitLoginForm() {
     try {
       const res = await axios.patch(
-        "http://localhost:3000/profile/edit",
+        `${BASE_URL}/profile/edit`,
         {
           firstName,
           lastName,
